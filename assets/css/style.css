@@ -1,0 +1,72 @@
+body {
+    background-image: url("assets/images/full-bloom.png");
+    width: 100%
+}
+
+h1 {
+    font-size: 43px;
+    border: solid 5px black;
+    background: white;
+    text-align: center;
+    margin-top: 2%;
+    margin-left: 10%;
+    margin-right:10%;
+    padding: 15px;
+    font-family: 'Raleway', sans-serif;
+}
+
+h2 {
+    font-family:'Comfortaa', cursive;
+    font-size: 20px;
+    padding-top: 10px;
+}
+
+
+img {
+    margin: 10px;
+}
+
+
+.sidebar {
+    padding: 5px;
+    position: relative;
+    border-top: solid black 2px;
+    border-bottom: solid black 2px;
+    margin-bottom: 5px;
+    font-family: 'Comfortaa', cursive;
+    font-size: 12px;
+}
+
+span {
+    border: solid black 2px;
+    padding-left: 3px;
+    padding-right:3px;
+    background-color: violet; 
+    font-size: 15px;
+}
+
+.background {
+    background-image: url("assets/images/full-bloom.png");
+    border: solid 5px black;
+}
+
+.container {
+    background-color: white;
+    margin-top: 5px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-bottom: 5px;
+    text-align: center;
+    border: solid 3px black;
+}
+
+#currentword {
+    font-size: 30px;
+    font-family: 'Comfortaa', cursive;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#scoreboard {
+    padding: 20px;
+}
