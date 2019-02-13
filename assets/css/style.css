@@ -1,12 +1,12 @@
 body {
-    background-image: url("assets/images/full-bloom.png");
+    background-image: url("assets/images/background.png");
     width: 100%
 }
 
 h1 {
     font-size: 43px;
     border: solid 5px black;
-    background: white;
+    background: lightgray;
     text-align: center;
     margin-top: 2%;
     margin-left: 10%;
@@ -41,17 +41,17 @@ span {
     border: solid black 2px;
     padding-left: 3px;
     padding-right:3px;
-    background-color: violet; 
+    background-color: aqua; 
     font-size: 15px;
 }
 
 .background {
-    background-image: url("assets/images/full-bloom.png");
+    background-image: url("assets/images/background.png");
     border: solid 5px black;
 }
 
 .container {
-    background-color: white;
+    background-color: lightgray;
     margin-top: 5px;
     margin-left: 20%;
     margin-right: 20%;

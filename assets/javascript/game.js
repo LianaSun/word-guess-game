@@ -72,7 +72,7 @@ function aud() {
         strawberry.pause();
         dragonfruit.pause();
         kiwi.pause();
-        banana.play();
+        banana.play(assets/images/win.mp3);
         document.getElementById("image").src = "assets/images/banana.jpg";
     }
     //Kiwi Audio & Image
@@ -84,7 +84,7 @@ function aud() {
         strawberry.pause();
         dragonfruit.pause();
         banana.pause();
-        kiwi.play();
+        kiwi.play(assets/images/win.mp3);
         document.getElementById("image").src = "assets/images/kiwi.jpg";
     }
     //Dragonfruit Audio & Image
@@ -96,7 +96,7 @@ function aud() {
         strawberry.pause();
         kiwi.pause();
         banana.pause();
-        dragonfruit.play();
+        dragonfruit.play(assets/images/win.mp3);
         document.getElementById("image").src = "assets/images/dragonfruit.jpg";
     }
     //Mango Audio & Image
@@ -108,7 +108,7 @@ function aud() {
         dragonfruit.pause();
         kiwi.pause();
         banana.pause();
-        mango.play();
+        mango.play(assets/images/win.mp3);
         document.getElementById("image").src = "assets/images/mango.jpg";
     }
     //Avocado Audio & Image
@@ -120,7 +120,7 @@ function aud() {
         kiwi.pause();
         banana.pause();
         mango.pause();
-        avocado.play();
+        avocado.play(assets/images/win.mp3);
         document.getElementById("image").src = "assets/images/avocado.jpg";
     }
     //Watermelon Audio & Image
@@ -132,7 +132,7 @@ function aud() {
         kiwi.pause();
         banana.pause();
         mango.pause();
-        watermelon.play();
+        watermelon.play(assets/images/win.mp3);
         document.getElementById("image").src = "assets/images/watermelon.jpg";
     }
     //Strawberry Audio & Image
@@ -144,7 +144,7 @@ function aud() {
         kiwi.pause();
         banana.pause();
         mango.pause();
-        strawberry.play();
+        strawberry.play(assets/images/win.mp3);
         document.getElementById("image").src = "assets/images/strawberry.jpg";
     }
 };
@@ -199,8 +199,9 @@ function complete() {
 
     //if WON...then alert, play audio, display image and reset new round
     if (lettersOfWord.toString() == blanksAndCorrect.toString()) {
+        console.log("lettersOfWord: " + lettersOfWord)
         wins++;
-        aud()
+        aud(assets/images/win.mp3)
         reset()
         //display wins on screen
         document.getElementById("winstracker").innerHTML = " " + wins;
