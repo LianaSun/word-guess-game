@@ -1,9 +1,9 @@
-#Word-Guess-Game
+# Word-Guess-Game
 
-#About the game and what it does
+# About the game and what it does
 Guess the fruit by pressing any letter key to reveal a picture of the fruit! 
 
-#How can the user get started
+# How can the user get started
 The user's input is checked to see if it matches any of the letters of the answer. If correct, the user's input will replace the corresponding underscore and be added to the Guessed Letters Div. If incorrect, the number of Guesses Left will subtract.
 
 If the user guesses all the letters, a picture of the fruit will appear, along with congratulatory text. The user will need to refresh to continue to play.
