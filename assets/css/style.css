@@ -1,72 +1,106 @@
 body {
-    background-image: url("assets/images/background.png");
-    width: 100%
+    max-width: 1024px;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    background: url("full-bloom.png");
+    margin: 0 auto;
+}
+
+.jumbotron {
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
 h1 {
-    font-size: 43px;
-    border: solid 5px black;
-    background: lightgray;
-    text-align: center;
-    margin-top: 2%;
-    margin-left: 10%;
-    margin-right:10%;
-    padding: 15px;
-    font-family: 'Raleway', sans-serif;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: magenta;
+
 }
 
-h2 {
-    font-family:'Comfortaa', cursive;
-    font-size: 20px;
-    padding-top: 10px;
+p {
+    color: black;
+    padding: 0;
+    margin: 0;
 }
 
-
-img {
-    margin: 10px;
+.header {
+    margin-bottom: 2.5%;
 }
 
-
-.sidebar {
-    padding: 5px;
+.parent {
+    width: 100%;
+    height: auto;
     position: relative;
-    border-top: solid black 2px;
-    border-bottom: solid black 2px;
-    margin-bottom: 5px;
-    font-family: 'Comfortaa', cursive;
-    font-size: 12px;
+    z-index: 0;
 }
 
-span {
-    border: solid black 2px;
-    padding-left: 3px;
-    padding-right:3px;
-    background-color: aqua; 
-    font-size: 15px;
+.innerOverlay {
+    position: absolute;
+    width: 30%;
+    right: 40%;
+    bottom: 50%;
+    top: 30%;
+    left: 35%;
 }
 
-.background {
-    background-image: url("assets/images/background.png");
-    border: solid 5px black;
+h5, h6 {
+    margin-top: 2.5%;
+    color: #777;
 }
 
-.container {
-    background-color: lightgray;
-    margin-top: 5px;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-bottom: 5px;
-    text-align: center;
-    border: solid 3px black;
+.mainDisplay {
+    background-color: black;
+    max-width: 90%;
 }
 
-#currentword {
-    font-size: 30px;
-    font-family: 'Comfortaa', cursive;
-    margin-bottom: 10px;
-    margin-top: 10px;
+.activeWords {
+    font-size: 1.5em;
+    letter-spacing: 0.3em;
+    color: #777;
 }
 
-#scoreboard {
-    padding: 20px;
+#revealedAnswerDisplay {
+    color: magenta;
+}
+
+#guessesMadeDisplay {
+    font-size: 0.8em;
+}
+
+.correct {
+    color: green;
+    font-weight: bold;
+}
+
+/*
+These rules take effect when the browser's width
+is either 768px or less. Merely for cosmetic purposes.
+---------------------------------------------------------------------------------------------------- */
+
+@media screen and (max-width: 768px) {
+
+    /* Hamburger Nav Styling Corrections */
+    p.ml-2.text-left.mobileBoard, p.mr-2.text-right.mobileBoard {
+        text-align: center !important;
+    }
+
+    p.mr-2.text-right.mobileBoard {
+        margin-bottom: 10px;
+    }
+
+    div.mx-auto.jumbotron.mainDisplay {
+        padding: 10px 16px 10px 16px !important;
+    }
+    
+    h6 {
+        font-size: 0.75em;
+    }
+
+    .header {
+        margin-bottom: 20px;
+    }
+
+    .activeWords, h5 {
+        font-size: 12px;
+    }
 }

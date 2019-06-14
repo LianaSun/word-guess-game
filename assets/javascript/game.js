@@ -1,243 +1,274 @@
-//VARIABLES
-var words = ["banana", "kiwi", "dragonfruit", "mango", "avocado", "watermelon", "strawberry"]
+/* INITAL SETUP
+ ----------------------------------------------------------------------------------------------------------------*/
 
-//Empty variables to store values later
-var randomWord = "";
-var lettersOfWord = []
-var blanks = 0;
-var blanksAndCorrect = [];
-var wrongGuess = [];
+//Array of fruit objects each with words (name), image1 (Placeholder image), image2 (Fruit Reveal)
+var fruitArray = [
+    {
+        word: "avocado",
+        image1: "assets/images/start.jpg",
+        image2: "assets/images/avocado.jpg"
+    },
+    {
+        word: "banana",
+        image1: "assets/images/start.jpg",
+        image2: "assets/images/banana.jpg"
+    },
+    {
+        word: "dragonfruit",
+        image1: "assets/images/start.jpg",
+        image2: "assets/images/dragonfruit.jpg"
+    },
+    {
+        word: "kiwi",
+        image1: "assets/images/start.jpg",
+        image2: "assets/images/kiwi.jpg"
+    },
+    {
+        word: "mango",
+        image1: "assets/images/start.jpg",
+        image2: "assets/images/mango.jpg"
+    },
+    {
+        word: "strawberry",
+        image1: "assets/images/start.jpg",
+        image2: "assets/images/strawberry.jpg"
+    },
+    {
+        word: "watermelon",
+        image1: "assets/images/start.jpg",
+        image2: "assets/images/watermelon.jpg"
+    },
+   ]
 
-//Counter Variables
-var wins = 0;
-var losses = 0;
-var guessesRemaining = 9;
+//gameStatus is my start/stop controller between questions    
+var gameStatus = false;
 
+//Generate randomNumber
+var randomNumber = Math.floor(Math.random() * fruitArray.length);
 
+//Apply randomNumber to obtain random word (answer), and related images.
+var fruit = fruitArray[randomNumber].word;
+var fruitImage1 = fruitArray[randomNumber].image1
+var fruitImage2 = fruitArray[randomNumber].image2
 
-// ALL FUNCTIONS
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//Establish lettersRemaining (for win);
+var lettersRemaining = fruit.length;
 
+//Set up the answer array to store word (answer) as an array for indexing.
+var answerArray = []; 
 
-//__________________________________________________________
-//GAME START FUNCTION
-//__________________________________________________________
-function Game() {
-    //computer generates random word from words array
-    randomWord = words[Math.floor(Math.random() * words.length)];
+/* LISTENERS
+ ----------------------------------------------------------------------------------------------------------------*/
 
-    // split the individual word into separate arrays, and store in new array 
-    lettersOfWord = randomWord.split("");
-
-    //store length of word in blanks, for later use
-    blanks = lettersOfWord.length;
-
-    //creating a loop to generate "_" for each letter in array stored in blanks
-    for (var i = 0; i < blanks; i++) {
-        blanksAndCorrect.push("_");
+//Use key events to listen for the letters that your players will type.
+document.addEventListener("keyup", function(event){
+    //If gameStatus (or game round) has been initialized, then proceed to playing.
+    if(gameStatus) {
+        letterCheck(event);
+    } else {
+        //If gameStatus (or game round) has completed, re-initialize (or reset) the game.
+        init();
     }
+});
 
-    //showing the "_" within HTML
-    document.getElementById("currentword").innerHTML = "  " + blanksAndCorrect.join("  ");
+//Setup alphabet array for letter checking
+var alphabetArray = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 
-    //console logging 
-    console.log(randomWord);
-    console.log(lettersOfWord)
-    console.log(blanks)
-    console.log(blanksAndCorrect)
+function letterCheck(guess) {
+    //If letter key is press, check if the letter pressed is in the answer.
+    if (alphabetArray.indexOf(guess.key) > -1) {
+        correctGuessCheck(guess);
+    }
 }
 
-
-//__________________________________________________________
-//AUDIO FUNCTION
-//__________________________________________________________
-
-//variables for audio function
-var banana = document.getElementById("banana");
-var kiwi = document.getElementById("kiwi");
-var dragonfruit = document.getElementById("dragonfruit");
-var mango = document.getElementById("mango");
-var avocado = document.getElementById("avocado");
-var watermelon = document.getElementById("watermelon");
-var strawberry = document.getElementById("strawberry");
-
-
-function aud() {
-    //Banana Audio & Image
-    //---------------------------
-    if (randomWord === words[0]) {
-        mango.pause();
-        avocado.pause();
-        watermelon.pause();
-        strawberry.pause();
-        dragonfruit.pause();
-        kiwi.pause();
-        banana.play(assets/images/win.mp3);
-        document.getElementById("image").src = "assets/images/banana.jpg";
+//Check whether the guess is correct
+var winScore = 0;
+function correctGuessCheck(guess) {
+    if (fruit.indexOf(guess.key) > -1) {
+        //if guess is correct, run correctGuess function.
+        correctGuess(guess);
+    } else {
+        //If guess is incorrect, run incorrectGuess function.
+        incorrectGuess(guess);
     }
-    //Kiwi Audio & Image
-    //---------------------------
-    else if (randomWord === words[1]) {
-        mango.pause();
-        avocado.pause();
-        watermelon.pause();
-        strawberry.pause();
-        dragonfruit.pause();
-        banana.pause();
-        kiwi.play(assets/images/win.mp3);
-        document.getElementById("image").src = "assets/images/kiwi.jpg";
-    }
-    //Dragonfruit Audio & Image
-    //---------------------------
-    else if (randomWord === words[2]) {
-        mango.pause();
-        avocado.pause();
-        watermelon.pause();
-        strawberry.pause();
-        kiwi.pause();
-        banana.pause();
-        dragonfruit.play(assets/images/win.mp3);
-        document.getElementById("image").src = "assets/images/dragonfruit.jpg";
-    }
-    //Mango Audio & Image
-    //---------------------------
-    else if (randomWord === words[3]) {
-        avocado.pause();
-        watermelon.pause();
-        strawberry.pause();
-        dragonfruit.pause();
-        kiwi.pause();
-        banana.pause();
-        mango.play(assets/images/win.mp3);
-        document.getElementById("image").src = "assets/images/mango.jpg";
-    }
-    //Avocado Audio & Image
-    //---------------------------
-    else if (randomWord === words[4]) {
-        watermelon.pause();
-        strawberry.pause();
-        dragonfruit.pause();
-        kiwi.pause();
-        banana.pause();
-        mango.pause();
-        avocado.play(assets/images/win.mp3);
-        document.getElementById("image").src = "assets/images/avocado.jpg";
-    }
-    //Watermelon Audio & Image
-    //---------------------------
-    else if (randomWord === words[5]) {
-        avocado.pause();
-        strawberry.pause();
-        dragonfruit.pause();
-        kiwi.pause();
-        banana.pause();
-        mango.pause();
-        watermelon.play(assets/images/win.mp3);
-        document.getElementById("image").src = "assets/images/watermelon.jpg";
-    }
-    //Strawberry Audio & Image
-    //---------------------------
-    else if (randomWord === words[6]) {
-        avocado.pause();
-        watermelon.pause();
-        dragonfruit.pause();
-        kiwi.pause();
-        banana.pause();
-        mango.pause();
-        strawberry.play(assets/images/win.mp3);
-        document.getElementById("image").src = "assets/images/strawberry.jpg";
-    }
-};
-
-//__________________________________________________________
-//RESET FUNCTION
-//__________________________________________________________
-function reset() {
-    guessesRemaining = 9;
-    wrongGuess = [];
-    blanksAndCorrect = [];
-    Game()
 }
 
-//__________________________________________________________
-//CHECK LETTERS/COMPARE FUNCTION
-//__________________________________________________________
-
-//If/Else, to see if letter selected matches random word
-function checkLetters(letter) {
-    var letterInWord = false;
-    //if the generated randomword is equal to the letter entered... then variable is true
-    for (var i = 0; i < blanks; i++) {
-        if (randomWord[i] == letter) {
-            letterInWord = true;
-        }
+function correctGuess(guess) {
+    if (answerArray.indexOf(guess.key.toUpperCase()) < 0) {
+        //If the correctGuess doesn't exist in the answerArray, run addCorrectLetter function.
+        addCorrectLetter(guess);
     }
-    //if letterInWord (false)
-    if (letterInWord) {
-        //check each letter to see if it matches word
-        for (var i = 0; i < blanks; i++) {
-            if (randomWord[i] == letter) {
-                blanksAndCorrect[i] = letter;
+}
+
+function addCorrectLetter(guess) {
+    for (var j = 0; j < fruit.length; j++) {
+        //If guess matches an existing letter in the answer.
+        if (guess.key === fruit[j]) {
+            //Push correct letter to answerArray as upperCase.
+            answerArray[j] = guess.key.toUpperCase();
+            displayCurrentWord();
+            //Reduce letters remaining for win by one.
+            lettersRemaining--;
+            //If letters left has reached 0, user wins. 
+            if (lettersRemaining === 0) {
+                //Add 1 to win score.
+                winScore++;
+                //Display new win score.
+                displayWins();
+                //Reveal the fruit identiy.
+                changeImage();
+                //Turn correct answer green.
+                addCorrect();
+                //display currentWord with new green font.
+                displayCurrentWord();
             }
         }
     }
-    //otherwise, push the incorrect guess in the wrong guesses section, and reduce remaining guesses
-    else {
-        wrongGuess.push(letter);
-        guessesRemaining--;
-    }
-    console.log(blanksAndCorrect);
 }
 
-//__________________________________________________________
-//FINAL COMPLETE FUNCTION
-//__________________________________________________________
+//Set up an incorrect answer array
+var incorrectGuessesMade = [];
+//Establish the number of guesses.
+var guessesLeft = 9;
 
-//check to see if player won...
-function complete() {
-    console.log("wins:" + wins + "| losses:" + losses + "| guesses left:" + guessesRemaining)
-
-    //if WON...then alert, play audio, display image and reset new round
-    if (lettersOfWord.toString() == blanksAndCorrect.toString()) {
-        console.log("lettersOfWord: " + lettersOfWord)
-        wins++;
-        aud(assets/images/win.mp3)
-        reset()
-        //display wins on screen
-        document.getElementById("winstracker").innerHTML = " " + wins;
-        document.getElementById("image").src ="assets/images/winner.jpg"
-
-        //if LOST...then alert and reset new round
-    } else if (guessesRemaining === 0) {
-        losses++;
-        reset()
-        document.getElementById("image").src = "assets/images/tryagain.jpg"
-        document.getElementById("losstracker").innerHTML = " " + losses;
+function incorrectGuess(guess) {
+    if (incorrectGuessesMade.indexOf(guess.key.toUpperCase()) < 0) {
+        //If the inCorrectGuess doesn't exist in the answerArray, run addIncorrectLetter function.
+        addIncorrectLetter(guess);
     }
-    //display losses on screen && guesses remaining countdown
-    document.getElementById("currentword").innerHTML = "  " + blanksAndCorrect.join(" ");
-    document.getElementById("guessesremaining").innerHTML = " " + guessesRemaining;
+}
+
+function addIncorrectLetter(guess) {
+    //Push incorrect guess into the incorrectGuessesMade array
+    incorrectGuessesMade.push(guess.key.toUpperCase());
+    //Inform user of incorrectGuessesMade
+    displayGuessesMade();
+    //Lower guessesLeft by 1
+    guessesLeft--;
+    //Inform user of guessesLeft
+    displayGuessesLeft();
+    if (guessesLeft === 0) {
+        //If guesses left reaches equals 0, then Game Over.
+        changeImage();
+        //Display corrent answer.
+        displayAnswer();
+    }
+}
+
+/* HANDLERS
+----------------------------------------------------------------------------------------------------------------*/
+
+//Displays the number of wins user has obtains.
+function displayWins() {
+    var winsDisplay = document.querySelector("#winsDisplay");
+    winsDisplay.textContent = winScore;
+}
+
+//Displays the letters the user has guessed.
+function displayGuessesMade() {
+    var guessesMadeDisplay = document.querySelector("#guessesMadeDisplay");
+    guessesMadeDisplay.textContent = incorrectGuessesMade.join(", ");
+}
+
+//Displays how many user guesses are left.
+function displayGuessesLeft() {
+    var guessesLeftDisplay = document.querySelector("#guessesLeftDisplay");
+    guessesLeftDisplay.textContent = guessesLeft;
+}
+
+//Displays current solve status of answerArray.
+function displayCurrentWord() {
+    var currentWordDisplay = document.querySelector("#currentWordDisplay");
+    currentWordDisplay.innerHTML = answerArray.join(" ");
+}
+
+//Displays initial placeholder image while player is guessing
+function displayImage() {
+    var pictureDisplay = document.querySelector("#pictureDisplay");
+    pictureDisplay.src = fruitImage1;
+}
+
+//Reveals fruit identiy regardless of whether user was able to solve. 
+function changeImage() {
+    var pictureDisplay = document.querySelector("#pictureDisplay");
+    pictureDisplay.src = fruitImage2;
+    gameStatus = false;
+}
+
+//Reveals answer if user is unable to solve.
+function displayAnswer() {
+    var revealedAnswerDisplay = document.querySelector("#revealedAnswerDisplay");
+    revealedAnswerDisplay.textContent = fruit.toUpperCase();
+}
+
+//Turns current word green (to indicate correctness)
+function addCorrect() {
+    var currentWordDisplay = document.querySelector("#currentWordDisplay");
+    currentWordDisplay.classList.add('correct');
+}
+
+//Removes green color of current word (for re-initalizing purposes)
+function removeCorrect() {
+    var currentWordDisplay = document.querySelector("#currentWordDisplay");
+    currentWordDisplay.classList.remove('correct');
 }
 
 
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//_____________________________________________________
-// EXECUTE CODE 
-//_____________________________________________________
+/* Initalize (or re-initialize) the game.
+----------------------------------------------------------------------------------------------------------------*/
 
-//call start game function
-Game()
+function init() {
+    //Changes gameStatus to ready.
+    gameStatus = true;
+    
+    //Generate a new random number
+    randomNumber = Math.floor(Math.random() * pokemonArray.length);
+    
+    //Apply new randomNumber to obtain random word (answer), and related images.
+    fruit = fruitArray[randomNumber].word;
+    fruitImage1 = fruitArray[randomNumber].image1
+    fruitImage2 = fruitArray[randomNumber].image2
 
-//check for keyup, and convert to lowercase then store in guesses
-document.onkeyup = function (event) {
-    var guesses = String.fromCharCode(event.keyCode).toLowerCase();
-    //check to see if guess entered matches value of random word
-    checkLetters(guesses);
-    //process wins/loss 
-    complete();
-    //store player guess in console for reference 
-    console.log(guesses);
+    //Re-establish lettersRemaining (for win);
+    lettersRemaining = fruit.length;
 
-    //display/store incorrect letters on screen
-    document.getElementById("playerguesses").innerHTML = "  " + wrongGuess.join(" ");
+    //Re-establish answer array.
+     answerArray = []; 
+
+    //Convert word answer into an array.
+    for (var i = 0; i < fruit.length; i++) {
+        //If an answer has more than one word, use + as a separator. A space will be displayed when currentWord is displayed. Not applicable for this particlar Pokemon game, but here for flexibility.
+        if (pokemon[i] === "+") {
+            answerArray[i] = "&nbsp;";
+        } else {
+            //Replace word answer with "_"s
+            answerArray[i] = "_";
+        }
+    }
+
+    //Re-establish lettersRemaining (for win)
+    lettersRemaining = fruit.length;
+
+    //Re-establish guessesLeft for user.
+    guessesLeft = 9;
+    displayGuessesLeft()
+
+    //Re-establish guessesMade array.
+    incorrectGuessesMade = [];
+    displayGuessesMade()
+    
+    //Display current word.
+    displayCurrentWord();
+
+    //Display start image
+    displayImage();
+
+    //Empty revealedAnswer display if user was unsuccessful previously.
+    revealedAnswerDisplay.textContent = "";
+
+    //Play "Winner" audio.
+    document.getElementById('win').play();
+
+    //Remove greenColor from currentWord if user was successful previously.
+    removeCorrect();
 }
