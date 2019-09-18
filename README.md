@@ -13,3 +13,6 @@ If the user does not guess all the letters, a try-again photo will appear, along
 # Have fun! This game is all about fun.
 If bugs appear...
 refresh the page. After testing, I noticed the game will sometimes not register all the letters. This generally happens if the user has played the game in-excess (usually 6 plus).
+
+# Play it now!
+https://lianasun.github.io/word-guess-game/
